@@ -5,6 +5,14 @@ from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 import os, requests, datetime
 
+colors = {
+    'ssh': '#C0C0C0',
+    'ss': '#FFD700',
+    'sh': '#999B9B',
+    's': '#FFFF00',
+    'a': '#00FF00'
+}
+
 def submit():
     # get username and mode
     username = username_entry.get()
@@ -23,11 +31,21 @@ def submit():
             return
 
     user_grades = user_get.statistics.grade_counts
-    grades = {
-        'ss': user_grades[0] + user_grades[1],
-        's': user_grades[2] + user_grades[3],
-        'a': user_grades[4]
-    }  # SS and S include hidden SS/S
+    if toggle.get():
+        grades = {
+            'ss': user_grades[0] + user_grades[1],
+            's': user_grades[2] + user_grades[3],
+            'a': user_grades[4]
+        }
+    else:
+        grades = {
+            'ssh': user_grades[0],
+            'ss': user_grades[1],
+            'sh': user_grades[2],
+            's': user_grades[3],
+            'a': user_grades[4]
+        }
+
     today = datetime.date.today().strftime("%Y-%m-%d")
 
     for k, v in grades.items():
@@ -36,13 +54,15 @@ def submit():
     # Plot the grades
     plt.clf()
     plt.pie(grades.values(), labels=grades.keys(), autopct="%.2f%%",
-            colors=['#FFD700', 'yellow', '#00FF00'])
+            colors=[colors[grade] for grade in grades.keys()])
     plt.title(f"{username}'s grades for {mode_selection} ({today})")
 
     plt.show()
 
 root = Tk()
+root.title("osu! Grades Chart")
 mode = StringVar()
+toggle = BooleanVar()
 
 # get API credentials
 load_dotenv()
@@ -60,7 +80,8 @@ mode_button2 = Radiobutton(root, text="Taiko", variable=mode, value="taiko").gri
 mode_button3 = Radiobutton(root, text="Catch", variable=mode, value="fruits").grid(row=1, column=3)
 mode_button4 = Radiobutton(root, text="Mania", variable=mode, value="mania").grid(row=1, column=4)
 
-button = Button(root, text="Get user grades", command=submit).grid(row=2, column=2)
+toggle_button = Checkbutton(root, text="Combine regular SS/S with hidden SS/S", variable=toggle, onvalue=True, offvalue=False).grid(row=2, column=0)
+button = Button(root, text="Get user grades", command=submit).grid(row=3, column=2)
 
 root.mainloop()
 
