@@ -10,6 +10,12 @@ and create a pie chart consisting of those grades. *The pie chart is displayed i
 
 *(Note: if `Combine regular SS/S with hidden SS/S` is not toggled, hidden SS/S will be separated from regular ones.)*
 
+## Sample plots
+
+![mrekk's grades in standard](https://i.ibb.co/9HL8R7tn/Figure-1.png "mrekk's grades in standard")
+![mrekk's grades in standard, hidden ranks combined](https://i.ibb.co/NcLR5g3/Figure-2.png "mrekk's grades in standard, hidden ranks combined")
+![Vallejo's (somebody_33's) grades in taiko](https://i.ibb.co/QjhczJHg/Figure-3.png "Vallejo's (somebody_33's) grades in taiko")
+
 # Usage of this program
 
 **IMPORTANT: Before running `main.py`, ensure that you have created an `.env` file 
