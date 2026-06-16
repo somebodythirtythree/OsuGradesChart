@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
-import os, requests
+import os, requests, datetime
 
 def submit():
     # get username and mode
@@ -28,6 +28,7 @@ def submit():
         's': user_grades[2] + user_grades[3],
         'a': user_grades[4]
     }  # SS and S include hidden SS/S
+    today = datetime.date.today().strftime("%Y-%m-%d")
 
     for k, v in grades.items():
         print(f"{k}: {v} ({v / sum(grades.values()) * 100:.2f}%)")
@@ -36,7 +37,7 @@ def submit():
     plt.clf()
     plt.pie(grades.values(), labels=grades.keys(), autopct="%.2f%%",
             colors=['#FFD700', 'yellow', '#00FF00'])
-    plt.title(f"{username}'s grades for {mode_selection}")
+    plt.title(f"{username}'s grades for {mode_selection} ({today})")
 
     plt.show()
 
