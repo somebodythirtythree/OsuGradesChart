@@ -46,6 +46,10 @@ def submit():
             'a': user_grades[4]
         }
 
+    if sum(grades.values()) == 0:
+        messagebox.showerror("Error", f"There is nothing to plot because user '{user_get.username}' has no SS, S, and A ranks for the selected mode.")
+        return
+
     today = datetime.date.today().strftime("%Y-%m-%d")
 
     for k, v in grades.items():
