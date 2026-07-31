@@ -1,6 +1,6 @@
 from osu import Client
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 import os, requests, datetime
@@ -14,6 +14,11 @@ colors = {
 }
 
 def submit():
+    load_dotenv()
+    CLIENT_ID = int(os.getenv("CLIENT_ID"))
+    SECRET = os.getenv("SECRET")
+    client = Client.from_credentials(CLIENT_ID, SECRET, None)
+
     # get username and mode
     username = username_entry.get()
     mode_selection = mode.get()
@@ -71,29 +76,69 @@ def submit():
 
     plt.show()
 
+def save_credentials():
+    try:
+        CLIENT_ID = int(id_entry.get().strip())
+        SECRET = secret_entry.get().strip()
+
+    except ValueError:
+        messagebox.showerror("Error", "Client ID should be a number")
+        return
+
+    if len(str(CLIENT_ID)) == 0 or len(SECRET) == 0:
+        messagebox.showerror("Error", "Client ID and secret must not be blank")
+        return
+
+    with open(".env", 'w') as f:
+        f.write(f'''
+        CLIENT_ID={CLIENT_ID}\n
+        SECRET={SECRET}\n
+        ''')
+
+    load_dotenv(override=True)
+
+
+def toggle_show():
+    secret_entry.config(show="")
+
 root = Tk()
 root.title("osu! Grades Chart")
 mode = StringVar()
 toggle = BooleanVar()
 
-# get API credentials
-load_dotenv()
-CLIENT_ID = int(os.getenv("CLIENT_ID"))
-SECRET = os.getenv("SECRET")
-client = Client.from_credentials(CLIENT_ID, SECRET, None)
+container = ttk.Notebook(root)
+container.pack(side="top", fill="both", expand=True)
 
-username_label = Label(root, text="Enter username").grid(row=0, column=0)
-username_entry = Entry(root)
+main_menu_tab = Frame(container)
+configure_credentials_tab = Frame(container)
+container.add(main_menu_tab, text="Main menu")
+container.add(configure_credentials_tab, text="Configure API credentials")
+
+# Main menu
+username_label = Label(main_menu_tab, text="Enter username").grid(row=0, column=0)
+username_entry = Entry(main_menu_tab)
 username_entry.grid(row=0, column=1)
 
-mode_label = Label(root, text="Select mode").grid(row=1, column=0)
-mode_button1 = Radiobutton(root, text="Standard", variable=mode, value="osu").grid(row=1, column=1)
-mode_button2 = Radiobutton(root, text="Taiko", variable=mode, value="taiko").grid(row=1, column=2)
-mode_button3 = Radiobutton(root, text="Catch", variable=mode, value="fruits").grid(row=1, column=3)
-mode_button4 = Radiobutton(root, text="Mania", variable=mode, value="mania").grid(row=1, column=4)
+mode_label = Label(main_menu_tab, text="Select mode").grid(row=1, column=0)
+mode_button1 = Radiobutton(main_menu_tab, text="Standard", variable=mode, value="osu").grid(row=1, column=1)
+mode_button2 = Radiobutton(main_menu_tab, text="Taiko", variable=mode, value="taiko").grid(row=1, column=2)
+mode_button3 = Radiobutton(main_menu_tab, text="Catch", variable=mode, value="fruits").grid(row=1, column=3)
+mode_button4 = Radiobutton(main_menu_tab, text="Mania", variable=mode, value="mania").grid(row=1, column=4)
 
-toggle_button = Checkbutton(root, text="Combine regular SS/S with hidden SS/S", variable=toggle, onvalue=True, offvalue=False).grid(row=2, column=0)
-button = Button(root, text="Get user grades", command=submit).grid(row=3, column=2)
+toggle_button = Checkbutton(main_menu_tab, text="Combine regular SS/S with hidden SS/S", variable=toggle, onvalue=True, offvalue=False).grid(row=2, column=0)
+button = Button(main_menu_tab, text="Get user grades", command=submit).grid(row=3, column=2)
 
+# Configure API credentials tab
+id_label = Label(configure_credentials_tab, text="Client ID").grid(row=0, column=0)
+id_entry = Entry(configure_credentials_tab)
+id_entry.grid(row=0, column=1)
+
+secret_label = Label(configure_credentials_tab, text="Secret key").grid(row=1, column=0)
+secret_entry = Entry(configure_credentials_tab, show="*")
+secret_entry.grid(row=1, column=1)
+
+hide_button = Button(configure_credentials_tab, text="Show", command=toggle_show).grid(row=1, column=2)
+
+save_button = Button(configure_credentials_tab, text="Save credentials", command=save_credentials).grid(row=2, column=2)
 root.mainloop()
 
