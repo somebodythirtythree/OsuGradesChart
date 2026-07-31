@@ -59,7 +59,7 @@ def submit():
     plt.clf()
     wedges, _ = plt.pie(grades.values(),
             colors=[colors[grade] for grade in grades.keys()])
-    plt.title(f"{username}'s grades for {mode_selection} ({today})")
+    plt.title(f"{user_get.username}'s grades for {mode_selection} ({today})")
     plt.legend(wedges, [f"{grade} ({grade_ct / sum(grades.values()) * 100:.2f}%)" for grade, grade_ct in grades.items()], loc="best")
 
     plt.show()
