@@ -108,6 +108,16 @@ def save_credentials():
 def toggle_show():
     secret_entry.config(show="")
 
+# create .env if it doesn't exist
+if not os.path.exists('.env'):
+    with open(".env", 'w') as f:
+        f.write('''
+        CLIENT_ID=\n
+        SECRET=\n
+        ''')
+
+    messagebox.showinfo("Info", "Before using this app, configure your API credentials in the 'Configure API credentials' tab. You will need an osu! API key to use this app.\nhttps://osu.ppy.sh/wiki/en/osu!api")
+
 root = Tk()
 root.title("osu! Grades Chart")
 mode = StringVar()
