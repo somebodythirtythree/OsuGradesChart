@@ -55,6 +55,13 @@ def submit():
     for k, v in grades.items():
         print(f"{k}: {v} ({v / sum(grades.values()) * 100:.2f}%)")
 
+    # For standard and ctb modes
+    match mode_selection:
+        case 'osu':
+            mode_selection = 'standard'
+        case 'fruits':
+            mode_selection = 'ctb'
+
     # Plot the grades
     plt.clf()
     wedges, _ = plt.pie(grades.values(),
