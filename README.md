@@ -4,8 +4,8 @@ This simple Python program uses osu!api v2 and the `matplotlib` library to creat
 
 ## Sample plots
 
-![mrekk's grades in standard](https://i.ibb.co/9HL8R7tn/Figure-1.png "mrekk's grades in standard")
-![mrekk's grades in standard, hidden ranks combined](https://i.ibb.co/NcLR5g3/Figure-2.png "mrekk's grades in standard, hidden ranks combined")
+![mrekk's grades in standard](https://i.ibb.co/Hf87nYSS/Figure-1.png "mrekk's grades in standard")
+![mrekk's grades in standard, hidden ranks combined](https://i.ibb.co/4gmWmzsn/Figure-2.png "mrekk's grades in standard, hidden ranks combined")
 ![Vallejo's (somebody_33's) grades in taiko, hidden ranks combined](https://i.ibb.co/QjhczJHg/Figure-3.png "Vallejo's (somebody_33's) grades in taiko, hidden ranks combined")
 
 # Usage of this program
