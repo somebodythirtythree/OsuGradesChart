@@ -31,8 +31,16 @@ def submit():
         user_get = client.get_user(username, mode_selection)
 
     except requests.exceptions.HTTPError as err:
-        if err.response.status_code == 404:
-            messagebox.showerror("User not found!", f"User {username} does not exist. Perhaps you made a typo?")
+        if err.response is not None:
+            match err.response.status_code:
+                case 404:
+                    messagebox.showerror("User not found!", f"User {username} does not exist. Perhaps you made a typo?")
+                    return
+                case _:
+                    messagebox.showerror("Unknown error", "An unknown error occurred. The server could be busy or down. Please try again later.")
+                    return
+        else:
+            messagebox.showerror("Error", err)
             return
 
     user_grades = user_get.statistics.grade_counts
@@ -96,6 +104,8 @@ def save_credentials():
         ''')
 
     load_dotenv(override=True)
+
+    messagebox.showinfo("Success", "Credentials updated!")
 
 
 def toggle_show():
