@@ -65,9 +65,6 @@ def submit():
 
     today = datetime.date.today().strftime("%Y-%m-%d")
 
-    for k, v in grades.items():
-        print(f"{k}: {v} ({v / sum(grades.values()) * 100:.2f}%)")
-
     # For standard and ctb modes
     match mode_selection:
         case 'osu':
