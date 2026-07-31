@@ -112,7 +112,7 @@ def toggle_show():
 if not os.path.exists('.env'):
     with open(".env", 'w') as f:
         f.write('''
-        CLIENT_ID=\n
+        CLIENT_ID=00000\n
         SECRET=\n
         ''')
 
