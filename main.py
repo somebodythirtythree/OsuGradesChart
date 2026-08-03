@@ -106,7 +106,13 @@ def save_credentials():
 
 
 def toggle_show():
-    secret_entry.config(show="")
+    global shown
+    if not shown:
+        secret_entry.config(show="")
+        shown = True
+    else:
+        secret_entry.config(show="*")
+        shown = False
 
 # create .env if it doesn't exist
 if not os.path.exists('.env'):
@@ -122,6 +128,7 @@ root = Tk()
 root.title("osu! Grades Chart")
 mode = StringVar()
 toggle = BooleanVar()
+shown = False  # if True, show secret key
 
 container = ttk.Notebook(root)
 container.pack(side="top", fill="both", expand=True)
@@ -154,7 +161,7 @@ secret_label = Label(configure_credentials_tab, text="Secret key").grid(row=1, c
 secret_entry = Entry(configure_credentials_tab, show="*")
 secret_entry.grid(row=1, column=1)
 
-hide_button = Button(configure_credentials_tab, text="Show", command=toggle_show).grid(row=1, column=2)
+hide_button = Button(configure_credentials_tab, text="Show/Hide", command=toggle_show).grid(row=1, column=2)
 
 save_button = Button(configure_credentials_tab, text="Save credentials", command=save_credentials).grid(row=2, column=2)
 root.mainloop()
