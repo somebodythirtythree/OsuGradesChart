@@ -1,3 +1,6 @@
+> [!WARNING] 
+> This repository is deprecated and will be moved to a more accessible format shortly.
+
 # About this program
 
 This simple Python program uses osu!api v2 and the `matplotlib` library to create a pie chart of a user's SS, S, and A ranks in osu!.
@@ -21,6 +24,4 @@ Once you have installed all the dependencies, run `main.py`.
 
 Enter your API credentials in the 'Configure API credentials' tab before making a request in the app. 
 You can obtain an API key by going to your account settings on the osu! website.
-
-*(Very shortly, you will be able to run this program as an executable rather than a Python file.)*
 
